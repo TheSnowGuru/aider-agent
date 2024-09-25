@@ -101,7 +101,6 @@
         "postinstall": "node ./node_modules/vscode/bin/install",
         "test": "jest --config ./src/tests/jest.config.ts",
         "build": "tsc"
-}
     },
     "devDependencies": {
         "@types/jest": "^29.5.10",
@@ -116,5 +115,4 @@
     "dependencies": {
         "dotenv": "^16.0.3"
     }
-    
 }
