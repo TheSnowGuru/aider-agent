@@ -168,6 +168,7 @@ vscode.workspace.onDidChangeConfiguration((e) => {
 });
 
 export function activate(context: vscode.ExtensionContext) {
+    let disposable: vscode.Disposable;
     context.subscriptions.push(
         vscode.commands.registerCommand('aider.openAiderAgent', () => {
             AiderAgentWebView.render(context.extensionUri);
@@ -244,7 +245,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.window.showInformationMessage("Open Help->Toggle Developer Tools to see debug info in the 'Console' tab.");
     });
 
-    context.subscriptions.push(disposable)
+    context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('aider.drop', function () {
         if (!aider) {

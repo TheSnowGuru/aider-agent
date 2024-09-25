@@ -162,7 +162,7 @@ const buttonConfig: ButtonConfig = {
 
 // Function to dynamically load the Vapi SDK script
 (function (d: Document, t: string) {
-  const g = document.createElement(t);
+  const g = document.createElement(t) as HTMLScriptElement;
   g.src = 'https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js';
   g.defer = true;
   g.async = true;
