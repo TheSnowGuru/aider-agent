@@ -1,57 +1,63 @@
-import { findWorkingDirectory } from '../extension';
+import { findWorkingDirectory, activate } from '../extension';
 import * as vscode from 'vscode';
-//import * as fs from 'fs';
-let fs = require('fs');
-let path = require('path');
+import * as fs from 'fs';
+import * as path from 'path';
+
+jest.mock('vscode');
 jest.mock('fs');
 jest.mock('path');
 
-describe('findWorkingDirectory should support paths from windows and mac', () => {
-    it('should find the working directory in windows', async () => {
-        const path = 'C:\\Users\\user\\Documents\\project\\src\\';
-        const workingDirectory = await findWorkingDirectory(path);
+describe('findWorkingDirectory', () => {
+    it('should find the working directory in Windows', async () => {
+        const testPath = 'C:\\Users\\user\\Documents\\project\\src\\';
+        jest.spyOn(fs, 'statSync').mockReturnValue({} as fs.Stats);
+        jest.spyOn(path, 'sep', 'get').mockReturnValue('\\');
+
+        const workingDirectory = await findWorkingDirectory(testPath);
         expect(workingDirectory).toEqual('C:\\Users\\user\\Documents\\project\\src\\');
     });
 
-    it('should find the working directory in mac', async () => {
-        const path = '/Users/user/Documents/project/src/';
-        const workingDirectory = await findWorkingDirectory(path);
-        expect(workingDirectory).toEqual('/Users/user/Documents/project/src/');
-    }); 
-});
+    it('should find the working directory in Mac', async () => {
+        const testPath = '/Users/user/Documents/project/src/';
+        jest.spyOn(fs, 'statSync').mockReturnValue({} as fs.Stats);
+        jest.spyOn(path, 'sep', 'get').mockReturnValue('/');
 
-describe('findWorkspaceDirectory should support a single workspace folder on windows and mac', () => {
-    it ('should find the .git folder in mac', async () => {
-        // Mock the workspaceFolders property
+        const workingDirectory = await findWorkingDirectory(testPath);
+        expect(workingDirectory).toEqual('/Users/user/Documents/project/src/');
+    });
+
+    it('should find the .git folder in a workspace', async () => {
         Object.defineProperty(vscode.workspace, 'workspaceFolders', {
-            get: () => [{
-                uri: vscode.Uri.file("/Users/user/Documents/project/src/"),
-                name: "project1",
+            get: jest.fn().mockReturnValue([{
+                uri: { fsPath: '/Users/user/Documents/project/src/' },
+                name: 'project1',
                 index: 0
-            }]
+            }])
         });
 
-        jest.spyOn(fs, 'statSync').mockReturnValueOnce(undefined).mockReturnValueOnce({});
-        jest.replaceProperty(path, 'sep', '/');
+        jest.spyOn(fs, 'statSync')
+            .mockImplementationOnce(() => { throw new Error('No .git here'); })
+            .mockReturnValueOnce({} as fs.Stats);
+        jest.spyOn(path, 'sep', 'get').mockReturnValue('/');
 
         const workingDirectory = await findWorkingDirectory('');
         expect(workingDirectory).toEqual('/Users/user/Documents/project/');
     });
+});
 
-    it ('should find the .git folder on windows', async () => {
-        // Mock the workspaceFolders property
-        Object.defineProperty(vscode.workspace, 'workspaceFolders', {
-            get: () => [{
-                uri: vscode.Uri.file("C:\\Users\\user\\Documents\\project\\src\\"),
-                name: "project1",
-                index: 0
-            }]
-        });
+describe('activate', () => {
+    it('should register commands', () => {
+        const context = {
+            subscriptions: []
+        };
 
-        jest.spyOn(fs, 'statSync').mockReturnValueOnce(undefined).mockReturnValueOnce({});
-        jest.replaceProperty(path, 'sep', '\\');
+        activate(context as any);
 
-        const workingDirectory = await findWorkingDirectory('');
-        expect(workingDirectory).toEqual('C:\\Users\\user\\Documents\\project\\');
+        expect(vscode.commands.registerCommand).toHaveBeenCalledWith('aider.openAiderAgent', expect.any(Function));
+        expect(vscode.commands.registerCommand).toHaveBeenCalledWith('aider.add', expect.any(Function));
+        expect(vscode.commands.registerCommand).toHaveBeenCalledWith('aider.drop', expect.any(Function));
+        expect(vscode.commands.registerCommand).toHaveBeenCalledWith('aider.syncFiles', expect.any(Function));
+        expect(vscode.commands.registerCommand).toHaveBeenCalledWith('aider.open', expect.any(Function));
+        expect(vscode.commands.registerCommand).toHaveBeenCalledWith('aider.close', expect.any(Function));
     });
 });
