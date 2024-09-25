@@ -168,10 +168,11 @@ vscode.workspace.onDidChangeConfiguration((e) => {
 });
 
 export function activate(context: vscode.ExtensionContext) {
-    let disposable = vscode.commands.registerCommand('aider.openAiderAgent', () => {
-        AiderAgentWebView.render(context.extensionUri);
-    });
-    context.subscriptions.push(disposable);
+    context.subscriptions.push(
+        vscode.commands.registerCommand('aider.openAiderAgent', () => {
+            AiderAgentWebView.render(context.extensionUri);
+        })
+    );
 
     vscode.workspace.onDidOpenTextDocument((document) => {
         if (aider) {
@@ -202,7 +203,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
-    let disposable = vscode.commands.registerCommand('aider.add', function () {
+    context.subscriptions.push(vscode.commands.registerCommand('aider.add', function () {
         if (!aider) {
             vscode.window.showErrorMessage("Aider is not running.  Please run the 'Open Aider' command first.");
         }
@@ -220,9 +221,7 @@ export function activate(context: vscode.ExtensionContext) {
             filesThatAiderKnows.add(filePath);
             aider.addFile(filePath);
         }
-    });
-
-    context.subscriptions.push(disposable);
+    }));
 
     disposable = vscode.commands.registerCommand('aider.debugInfo', function () {
         console.log(`===============================`)
