@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { AiderInterface, AiderTerminal } from './AiderTerminal';
+import { AiderAgentWebView } from './AiderAgentWebView';
 import fs = require('fs');
 import path = require('path');
 
@@ -167,6 +168,11 @@ vscode.workspace.onDidChangeConfiguration((e) => {
 });
 
 export function activate(context: vscode.ExtensionContext) {
+    let disposable = vscode.commands.registerCommand('aider.openAiderAgent', () => {
+        AiderAgentWebView.render(context.extensionUri);
+    });
+    context.subscriptions.push(disposable);
+
     vscode.workspace.onDidOpenTextDocument((document) => {
         if (aider) {
             if (document.uri.scheme === "file" && document.fileName && aider.isWorkspaceFile(document.fileName)) {

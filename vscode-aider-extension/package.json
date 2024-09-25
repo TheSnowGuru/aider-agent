@@ -70,8 +70,29 @@
             {
                 "command": "aider.close",
                 "title": "Close Aider"
+            },
+            {
+                "command": "aider.openAiderAgent",
+                "title": "Open Aider Agent"
             }
-        ]
+        ],
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "aider-sidebar",
+                    "title": "Aider",
+                    "icon": "images/AiderExtension.png"
+                }
+            ]
+        },
+        "views": {
+            "aider-sidebar": [
+                {
+                    "id": "aiderAgentView",
+                    "name": "Aider Agent"
+                }
+            ]
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",

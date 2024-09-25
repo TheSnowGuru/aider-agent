@@ -194,4 +194,15 @@ function endCall() {
 }
 
 // Export functions if needed
-export { startCall, endCall };
+export { startCall, endCall, startConversation };
+
+// Function to start the conversation about the repo
+function startConversation() {
+  if (vapiInstance) {
+    vapiInstance.startCall();
+    // Here you can add any additional logic to start the conversation about the repo
+    console.log('Starting conversation about the repo');
+  } else {
+    console.error('Vapi instance not initialized');
+  }
+}
