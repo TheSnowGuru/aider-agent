@@ -15,8 +15,8 @@
     "categories": [
         "Other"
     ],
-    "activationEvents": [],
-    "main": "./out/extension.js",
+    "activationEvents": ["*"],
+    "main": "./dist/extension.js",
     "contributes": {
         "configuration": {
             "title": "Aider",
