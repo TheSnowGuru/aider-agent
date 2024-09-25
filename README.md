@@ -5,7 +5,6 @@
 Here’s a shorter version with a few emojis added:
 
 
-
 ### AiderAgentCoder 🚀
 
 AiderAgentCoder is an open-source VSCode extension that lets you brainstorm with an AI agent about your projects and code repos. Integrating seamlessly into VSCode, it offers an intuitive way to collaborate with the AI without leaving your IDE.
@@ -24,7 +23,7 @@ Easy Setup: Manage your OPENAI_API_KEY directly in the extension settings.
 1. Install Aider: Follow the Aider installation guide.
 
 
-2. Set API Key: Add your OPENAI_API_KEY in the extension settings.
+2. Set API Key: Add your OPENAI_API_KEY in the .env extension file.
 
 
 3. Run the Extension: Open the Command Palette (Ctrl+Shift+P) and run Open AiderAgentCoder.
