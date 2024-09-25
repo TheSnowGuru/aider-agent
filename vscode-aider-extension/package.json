@@ -99,7 +99,9 @@
         "compile": "tsc -p ./",
         "watch": "tsc -watch -p ./",
         "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "jest --config ./src/tests/jest.config.ts"
+        "test": "jest --config ./src/tests/jest.config.ts",
+        "build": "tsc"
+}
     },
     "devDependencies": {
         "@types/jest": "^29.5.10",
@@ -111,4 +113,5 @@
         "typescript": "5.3.2",
         "vscode": "1.1.37"
     }
+    
 }
