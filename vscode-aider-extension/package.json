@@ -49,31 +49,31 @@
         "commands": [
             {
                 "command": "aider.add",
-                "title": "Add File to Aider"
+                "title": "Aider: Add File to Aider"
             },
             {
                 "command": "aider.drop",
-                "title": "Drop File from Aider"
+                "title": "Aider: Drop File from Aider"
             },
             {
                 "command": "aider.syncFiles",
-                "title": "Sync Open Files to Aider"
+                "title": "Aider: Sync Open Files to Aider"
             },
             {
                 "command": "aider.debugInfo",
-                "title": "Aider Debug Info"
+                "title": "Aider: Debug Info"
             },
             {
                 "command": "aider.open",
-                "title": "Open Aider"
+                "title": "Aider: Open"
             },
             {
                 "command": "aider.close",
-                "title": "Close Aider"
+                "title": "Aider: Close"
             },
             {
                 "command": "aider.openAiderAgent",
-                "title": "Open Aider Agent"
+                "title": "Aider: Open Aider Agent"
             }
         ],
         "viewsContainers": {

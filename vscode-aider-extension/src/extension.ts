@@ -168,9 +168,11 @@ vscode.workspace.onDidChangeConfiguration((e) => {
 });
 
 export function activate(context: vscode.ExtensionContext) {
+    console.log('Aider extension is now active!');
     let disposable: vscode.Disposable;
     context.subscriptions.push(
         vscode.commands.registerCommand('aider.openAiderAgent', () => {
+            console.log('Aider: openAiderAgent command triggered');
             AiderAgentWebView.render(context.extensionUri);
         })
     );
@@ -280,12 +282,15 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('aider.open', function () {
+        console.log('Aider: open command triggered');
         if (!aider) {
+            console.log('Aider: Creating new Aider instance');
             filesThatAiderKnows.clear();
             createAider();
         }
 
         if (aider) {
+            console.log('Aider: Showing Aider');
             aider.show();
         }
     });
